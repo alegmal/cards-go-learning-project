@@ -13,7 +13,7 @@ func main() {
 	cards := newDeck()
 	cards.print()
 	cards.SaveToFile(filename)
-	newCards := newDeckFromFile(filename)
+	newCards := newDeckFromFile("filenamef")
 	newCards.print()
 	os.Remove(filename)
 }
