@@ -1,13 +1,19 @@
 package main
 
+import (
+	"os"
+)
+
 // import (
 // 	"fmt"
 // )
 
 func main() {
+	filename := "test"
 	cards := newDeck()
 	cards.print()
-	cards.SaveToFile("test")
-	newCards := newDeckFromFile("test")
+	cards.SaveToFile(filename)
+	newCards := newDeckFromFile(filename)
 	newCards.print()
+	os.Remove(filename)
 }
