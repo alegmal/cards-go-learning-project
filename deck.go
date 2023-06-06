@@ -1,10 +1,12 @@
 package main
 
 import (
-	"os"
 	"fmt"
 	"io/ioutil"
+	"math/rand"
+	"os"
 	"strings"
+	"time"
 )
 
 type deck []string
@@ -17,7 +19,7 @@ func newDeck() deck {
 
 	for _, suit := range cardSuits {
 		for _, value := range cardValues {
-			cards = append(cards, suit+" of "+value)
+			cards = append(cards, value+" of "+suit)
 		}
 	}
 
@@ -48,5 +50,17 @@ func newDeckFromFile(filename string) deck {
 		fmt.Println("error occured: ", error)
 		os.Exit(1)
 	}
-	return strings.Split(string(fileContent[:]), ",")
+	return strings.Split(string(fileContent), ",")
+}
+
+func (d deck) shuffle() deck {
+	deckLength := len(d) - 1
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+
+	for i := range d {
+		randomNumber := r.Intn(deckLength)
+		d[i], d[randomNumber] = d[randomNumber], d[i]
+	}
+	return d
 }
